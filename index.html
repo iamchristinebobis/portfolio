@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christine C. Bobis I — Virtual Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   THEME VARIABLES
+══════════════════════════════════════ */
+:root {
+  --accent: #c4956a;
+  --accent-light: #e8d5c0;
+  --accent-dark: #a87a52;
+  --transition: 0.35s ease;
+}
+
+[data-theme="light"] {
+  --bg-primary:    #f5f0e8;
+  --bg-secondary:  #faf8f4;
+  --bg-dark:       #3a2e26;
+  --bg-darker:     #1e1610;
+  --text-main:     #2d2520;
+  --text-body:     #7a6e64;
+  --text-light:    #b5a898;
+  --border:        rgba(181,168,152,0.4);
+  --card-bg:       #f5f0e8;
+  --nav-bg:        rgba(245,240,232,0.88);
+  --tag-hover-bg:  #3a2e26;
+  --tag-hover-txt: #f5f0e8;
+  --exp-task-bg:   rgba(255,255,255,0.04);
+  --exp-task-border: rgba(255,255,255,0.07);
+  --hero-num-color:#3a2e26;
+  --hero-stat-bg:  #faf8f4;
+}
+
+[data-theme="dark"] {
+  --bg-primary:    #1a1410;
+  --bg-secondary:  #231c17;
+  --bg-dark:       #2e2218;
+  --bg-darker:     #0e0b08;
+  --text-main:     #f0e8dc;
+  --text-body:     #b5a898;
+  --text-light:    #7a6e64;
+  --border:        rgba(181,168,152,0.18);
+  --card-bg:       #231c17;
+  --nav-bg:        rgba(26,20,16,0.92);
+  --tag-hover-bg:  #c4956a;
+  --tag-hover-txt: #1a1410;
+  --exp-task-bg:   rgba(255,255,255,0.03);
+  --exp-task-border: rgba(255,255,255,0.06);
+  --hero-num-color:#f0e8dc;
+  --hero-stat-bg:  #2e2218;
+}
+
+/* ══════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 1.2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--nav-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-main);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-body);
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ── Theme Toggle ── */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s, background 0.3s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--accent); background: rgba(196,149,106,0.1); }
+.theme-toggle svg { width: 18px; height: 18px; fill: var(--text-body); transition: fill 0.3s; }
+.theme-toggle:hover svg { fill: var(--accent); }
+.icon-moon { display: block; }
+.icon-sun  { display: none; }
+[data-theme="dark"] .icon-moon { display: none; }
+[data-theme="dark"] .icon-sun  { display: block; }
+
+/* ── Nav Action Pills ── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-shrink: 0;
+}
+.nav-pill {
+  padding: 0.45rem 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  color: var(--text-body);
+  border-radius: 2px;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+  white-space: nowrap;
+}
+.nav-pill:hover { border-color: var(--accent); color: var(--accent); }
+.nav-pill.accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.nav-pill.accent:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-body);
+  transition: all 0.3s;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile Drawer ── */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-primary);
+  z-index: 150;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  transition: opacity 0.3s;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--text-main);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: var(--accent); }
+.mobile-menu .mobile-close {
+  position: absolute;
+  top: 1.4rem; right: 1.5rem;
+  font-size: 1.8rem;
+  background: none; border: none;
+  color: var(--text-body); cursor: pointer;
+}
+
+/* ══════════════════════════════════════
+   SECTION BASE
+══════════════════════════════════════ */
+section { padding: 7rem 6rem; }
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 300;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+.section-divider {
+  width: 60px; height: 1px;
+  background: var(--accent);
+  margin: 1.5rem 0 2.5rem;
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(6rem, 14vw, 16rem);
+  font-weight: 300;
+  color: rgba(181,168,152,0.06);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+  z-index: 0;
+}
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 3rem 5rem 6rem;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.2s forwards;
+}
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.4s forwards;
+}
+.hero-name em { font-style: italic; color: var(--accent); }
+.hero-tagline {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.6s forwards;
+}
+.hero-desc {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text-body);
+  max-width: 420px;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.8s forwards;
+}
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1s forwards;
+}
+.btn-primary {
+  padding: 0.9rem 2rem;
+  background: var(--bg-dark);
+  color: var(--bg-secondary);
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background 0.3s, transform 0.2s;
+  white-space: nowrap;
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+.btn-outline {
+  padding: 0.9rem 2rem;
+  border: 1px solid var(--text-light);
+  color: var(--text-body);
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: border-color 0.3s, color 0.3s, transform 0.2s;
+  white-space: nowrap;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.btn-cv {
+  padding: 0.9rem 2rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background 0.3s, transform 0.2s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-cv:hover { background: var(--accent-dark); transform: translateY(-2px); }
+.btn-cv svg { width: 14px; height: 14px; fill: currentColor; }
+
+.hero-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeIn 1s ease 0.6s forwards;
+}
+.hero-image-frame {
+  position: relative;
+  width: 420px;
+  height: 540px;
+  overflow: hidden;
+}
+.hero-image-frame::before {
+  content: '';
+  position: absolute;
+  top: 24px; right: -24px;
+  width: 100%; height: 100%;
+  border: 1px solid var(--accent-light);
+  z-index: -1;
+}
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+.hero-stats {
+  position: absolute;
+  bottom: 0; right: -40px;
+  background: var(--hero-stat-bg);
+  padding: 1.5rem 2rem;
+  border-left: 3px solid var(--accent);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+.hero-stats-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--hero-num-color);
+  line-height: 1;
+}
+.hero-stats-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-top: 0.3rem;
+}
+
+/* ══════════════════════════════════════
+   ABOUT
+══════════════════════════════════════ */
+#about {
+  background: var(--bg-secondary);
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 6rem;
+  align-items: center;
+}
+.about-body { font-size: 1rem; line-height: 2; color: var(--text-body); }
+.about-body p + p { margin-top: 1.2rem; }
+.about-right { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.about-card {
+  background: var(--card-bg);
+  padding: 2rem 1.8rem;
+  border-bottom: 2px solid var(--accent-light);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.about-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.about-card-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+.about-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+.about-card-text { font-size: 0.82rem; color: var(--text-body); line-height: 1.7; }
+
+/* ══════════════════════════════════════
+   SERVICES
+══════════════════════════════════════ */
+#services { background: var(--bg-primary); }
+.services-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  margin-bottom: 4rem;
+}
+.services-intro { font-size: 1rem; line-height: 1.9; color: var(--text-body); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--border);
+}
+.service-item {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: background 0.4s;
+}
+.service-item:nth-child(4n) { border-right: none; }
+.service-item:nth-last-child(-n+4) { border-bottom: none; }
+.service-item::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+.service-item:hover::before { width: 100%; }
+.service-item:hover { background: var(--bg-secondary); }
+.service-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--accent-light);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.service-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  color: var(--text-main);
+  margin-bottom: 0.8rem;
+}
+.service-desc { font-size: 0.8rem; line-height: 1.75; color: var(--text-body); }
+
+/* ══════════════════════════════════════
+   EXPERIENCE
+══════════════════════════════════════ */
+#experience {
+  background: var(--bg-dark);
+  color: var(--bg-secondary);
+}
+#experience .section-title { color: #f5f0e8; }
+#experience .section-label { color: var(--accent); }
+.exp-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  margin-top: 4rem;
+}
+.exp-meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+.exp-company {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  color: #f5f0e8;
+}
+.exp-role {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.6);
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+.exp-desc { font-size: 0.9rem; line-height: 1.9; color: rgba(245,240,232,0.7); }
+.exp-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.exp-task-group {
+  background: var(--exp-task-bg);
+  padding: 1.8rem;
+  border: 1px solid var(--exp-task-border);
+  transition: background 0.3s;
+}
+.exp-task-group:hover { background: rgba(196,149,106,0.1); }
+.exp-task-group h4 {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(196,149,106,0.2);
+}
+.exp-task-list { list-style: none; }
+.exp-task-list li {
+  font-size: 0.82rem;
+  color: rgba(245,240,232,0.65);
+  line-height: 1.6;
+  padding: 0.3rem 0 0.3rem 1rem;
+  position: relative;
+}
+.exp-task-list li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--accent);
+  opacity: 0.5;
+}
+
+/* ══════════════════════════════════════
+   TOOLS
+══════════════════════════════════════ */
+#tools { background: var(--bg-secondary); }
+.tools-header { margin-bottom: 3.5rem; }
+.tools-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.tool-tag {
+  padding: 0.65rem 1.5rem;
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-body);
+  background: transparent;
+  transition: all 0.3s;
+  cursor: default;
+}
+.tool-tag:hover {
+  background: var(--tag-hover-bg);
+  color: var(--tag-hover-txt);
+  border-color: var(--tag-hover-bg);
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════
+   EDUCATION
+══════════════════════════════════════ */
+#education {
+  background: var(--bg-primary);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+}
+.edu-entry {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.edu-year {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+.edu-school {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--text-main);
+  margin-bottom: 0.3rem;
+}
+.edu-degree { font-size: 0.85rem; color: var(--text-body); margin-bottom: 0.4rem; }
+.edu-honor {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.cert-list { list-style: none; }
+.cert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.cert-bullet {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 0.4rem;
+}
+.cert-text { font-size: 0.88rem; color: var(--text-body); line-height: 1.5; }
+
+/* ══════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════ */
+#testimonials { background: var(--bg-secondary); }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.testimonial-card {
+  background: var(--card-bg);
+  padding: 2.5rem 2.2rem;
+  border-top: 3px solid var(--accent-light);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.testimonial-card:hover { border-color: var(--accent); transform: translateY(-6px); }
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem;
+  line-height: 0.7;
+  color: var(--accent-light);
+  margin-bottom: 1rem;
+  display: block;
+}
+.testimonial-text {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-body);
+  font-style: italic;
+  margin-bottom: 1.8rem;
+}
+.testimonial-author {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+.stars { color: var(--accent); font-size: 0.8rem; margin-bottom: 0.5rem; }
+
+/* ══════════════════════════════════════
+   CONTACT
+══════════════════════════════════════ */
+#contact {
+  background: var(--bg-dark);
+  text-align: center;
+  padding: 8rem 6rem;
+  position: relative;
+  overflow: hidden;
+}
+#contact::before {
+  content: 'CONNECT';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 15vw, 18rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+}
+#contact .section-title { color: #f5f0e8; margin-bottom: 1rem; }
+#contact .section-label { color: var(--accent); }
+.contact-sub {
+  font-size: 1rem;
+  color: rgba(245,240,232,0.6);
+  max-width: 500px;
+  margin: 0 auto 3rem;
+  line-height: 1.9;
+}
+.contact-details {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.contact-item-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.contact-item-value {
+  font-size: 0.9rem;
+  color: rgba(245,240,232,0.8);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.contact-item-value:hover { color: var(--accent); }
+.contact-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.contact-cta {
+  display: inline-block;
+  padding: 1.1rem 2.8rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: background 0.3s, transform 0.2s;
+}
+.contact-cta:hover { background: var(--accent-dark); transform: translateY(-2px); }
+.contact-cta-outline {
+  display: inline-block;
+  padding: 1.1rem 2.8rem;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+.contact-cta-outline:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  background: var(--bg-darker);
+  padding: 2rem 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: rgba(245,240,232,0.35);
+  letter-spacing: 0.12em;
+}
+.footer-copy {
+  font-size: 0.7rem;
+  color: rgba(245,240,232,0.2);
+  letter-spacing: 0.1em;
+}
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════
+   RESPONSIVE — TABLET (≤1100px)
+══════════════════════════════════════ */
+@media (max-width: 1100px) {
+  section { padding: 5rem 3rem; }
+  nav { padding: 1.2rem 2rem; }
+  .nav-links { display: none; }
+  .nav-actions { display: none; }
+  .hamburger { display: flex; }
+
+  #hero { grid-template-columns: 1fr; padding: 100px 3rem 3rem; }
+  .hero-left { padding: 3rem 0; }
+  .hero-right { display: none; }
+
+  #about { grid-template-columns: 1fr; gap: 3rem; }
+  .services-header { grid-template-columns: 1fr; gap: 2rem; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-item:nth-child(4n) { border-right: 1px solid var(--border); }
+  .service-item:nth-child(2n) { border-right: none; }
+  .service-item:nth-last-child(-n+4) { border-bottom: 1px solid var(--border); }
+  .service-item:nth-last-child(-n+2) { border-bottom: none; }
+
+  .exp-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .exp-right { grid-template-columns: 1fr 1fr; }
+
+  #education { grid-template-columns: 1fr; gap: 3rem; }
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.8rem 2rem; }
+  #contact { padding: 6rem 3rem; }
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE (≤640px)
+══════════════════════════════════════ */
+@media (max-width: 640px) {
+  section { padding: 4rem 1.5rem; }
+  nav { padding: 1rem 1.4rem; }
+  .nav-logo { font-size: 0.9rem; letter-spacing: 0.1em; }
+
+  #hero { padding: 90px 1.5rem 2.5rem; }
+  .hero-left { padding: 2rem 0; }
+  .hero-ctas { flex-direction: column; gap: 0.8rem; }
+  .btn-primary, .btn-outline, .btn-cv {
+    width: 100%; text-align: center; justify-content: center;
+  }
+
+  .about-right { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-item { border-right: none !important; }
+  .service-item:not(:last-child) { border-bottom: 1px solid var(--border) !important; }
+  .service-item:last-child { border-bottom: none !important; }
+
+  .exp-right { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+
+  #contact { padding: 5rem 1.5rem; }
+  .contact-details { gap: 1.5rem; }
+  .contact-ctas { flex-direction: column; align-items: center; }
+  .contact-cta, .contact-cta-outline {
+    width: 100%; max-width: 320px; text-align: center;
+  }
+
+  footer { padding: 1.5rem 1.5rem; }
+  .footer-name { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── MOBILE MENU DRAWER ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <a href="#about"        onclick="closeMobile()">About</a>
+  <a href="#services"     onclick="closeMobile()">Services</a>
+  <a href="#experience"   onclick="closeMobile()">Experience</a>
+  <a href="#tools"        onclick="closeMobile()">Tools</a>
+  <a href="https://www.linkedin.com/in/christine-bobis-844307378" target="_blank" onclick="closeMobile()">LinkedIn ↗</a>
+  <a href="#contact"      onclick="closeMobile()">Contact</a>
+  <a href="https://drive.google.com/file/d/1LuElQXzr0zmobOulVwNdXXfX0NSG_yBb/view?usp=drive_link"
+     target="_blank" style="color:var(--accent);">View CV ↗</a>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">Christine C. Bobis I</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <!-- Moon (light mode icon) -->
+      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
+      </svg>
+      <!-- Sun (dark mode icon) -->
+      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    </div><!-- end nav-actions -->
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg-text">VA</div>
+  <div class="hero-left">
+    <p class="hero-eyebrow">Virtual Assistant · Executive Support · Social Media</p>
+    <h1 class="hero-name">Christine<br><em>C. Bobis I</em></h1>
+    <p class="hero-tagline">Your trusted partner in business growth</p>
+    <p class="hero-desc">I help businesses stay organized, build a strong online presence, and streamline their daily operations — handling every detail with professionalism, strategy, and care.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Schedule a Call</a>
+      <a href="#services" class="btn-outline">View Services</a>
+      <a href="https://drive.google.com/file/d/1LuElQXzr0zmobOulVwNdXXfX0NSG_yBb/view?usp=drive_link"
+         target="_blank" class="btn-cv">
+        <svg viewBox="0 0 24 24"><path d="M12 16l-4-4h3V4h2v8h3l-4 4zm-7 2h14v2H5v-2z"/></svg>
+        View My CV
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-frame">
+      <img src="https://i.ibb.co/ycXDTjZ6/Unknown-3.png" alt="Christine C. Bobis I" class="hero-photo">
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stats-num">3+</div>
+      <div class="hero-stats-label">Years of Experience</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-left reveal">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">Reliable Support,<br><em style="font-style:italic;color:var(--accent)">Real Results</em></h2>
+    <div class="section-divider"></div>
+    <div class="about-body">
+      <p>I am a Magna Cum Laude graduate with a Bachelor of Science in Entrepreneurship from Bicol University, and I bring over three years of hands-on experience as an Executive Assistant to senior corporate leaders.</p>
+      <p>I don't just complete tasks — I anticipate needs, solve problems, and take initiative to improve processes. From managing executive calendars to building brand presence, I treat every client's business as my own.</p>
+      <p>My approach is grounded in professionalism, attention to detail, and a genuine commitment to your growth. Let me be the reliable right hand that makes scaling your business feel effortless.</p>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <div class="about-card">
+      <div class="about-card-icon">🗂️</div>
+      <div class="about-card-title">Highly Organized</div>
+      <div class="about-card-text">Systems, calendars, and workflows managed with precision so nothing falls through the cracks.</div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-icon">🤝</div>
+      <div class="about-card-title">Reliable Partner</div>
+      <div class="about-card-text">Proactive, dependable, and able to work with minimum supervision to deliver consistent results.</div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-icon">📈</div>
+      <div class="about-card-title">Results-Driven</div>
+      <div class="about-card-text">Every task is completed with growth and efficiency in mind — from strategy to execution.</div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-icon">🎨</div>
+      <div class="about-card-title">Creative Edge</div>
+      <div class="about-card-text">Social media, graphic design, and content creation that builds your brand identity.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <p class="section-label">What I Offer</p>
+      <h2 class="section-title">Services as<br>Your Virtual Assistant</h2>
+    </div>
+    <p class="services-intro">From daily operations to creative campaigns, I cover the full spectrum of support your business needs to thrive — so you can focus on what matters most.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-item">
+      <div class="service-num">01</div>
+      <div class="service-name">Administrative Support</div>
+      <div class="service-desc">Calendar management, email handling, records, meeting coordination, and professional writing — keeping your operations seamless.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">02</div>
+      <div class="service-name">Project Management</div>
+      <div class="service-desc">Organized timelines, task tracking, and team coordination to keep your projects on schedule and on-budget.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">03</div>
+      <div class="service-name">Social Media Management</div>
+      <div class="service-desc">Content creation, graphic design, posting, and audience engagement across all major platforms.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">04</div>
+      <div class="service-name">Email Marketing</div>
+      <div class="service-desc">Designing and automating email campaigns that nurture leads and drive consistent conversions for your business.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">05</div>
+      <div class="service-name">Lead Generation</div>
+      <div class="service-desc">Finding high-quality, targeted leads to grow your pipeline through research, cold calling, and CRM management.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">06</div>
+      <div class="service-name">Customer Support</div>
+      <div class="service-desc">Timely, professional, and friendly support that keeps your clients happy, loyal, and coming back.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">07</div>
+      <div class="service-name">Content Writing</div>
+      <div class="service-desc">Compelling, on-brand copy that speaks to your audience, tells your story, and drives meaningful action.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">08</div>
+      <div class="service-name">Data Entry & Research</div>
+      <div class="service-desc">Accurate, efficient data handling and market research to keep your business informed and well-organized.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <p class="section-label">Work Experience</p>
+  <h2 class="section-title">Proven Track Record</h2>
+  <div class="exp-grid reveal">
+    <div class="exp-left">
+      <p class="exp-meta">2022 — April 2026</p>
+      <h3 class="exp-company">LCC Department Store</h3>
+      <p class="exp-role">Executive Assistant — Deputy Chief Operating Officer & Deputy Chief Business Officer</p>
+      <p class="exp-desc">Supporting two senior executives across a large retail organization, managing cross-departmental operations, marketing strategies, and administrative functions that impact dozens of teams and business units.</p>
+    </div>
+    <div class="exp-right">
+      <div class="exp-task-group">
+        <h4>Office & Administration</h4>
+        <ul class="exp-task-list">
+          <li>Executive Assistance</li>
+          <li>Project Management</li>
+          <li>Calendar & Email Management</li>
+          <li>Records & Meeting Management</li>
+          <li>Store Operations Management</li>
+          <li>Professional Writing</li>
+          <li>Quality Monitoring</li>
+        </ul>
+      </div>
+      <div class="exp-task-group">
+        <h4>Marketing & Content</h4>
+        <ul class="exp-task-list">
+          <li>Social Media Management</li>
+          <li>Content Creation</li>
+          <li>Graphic Design</li>
+          <li>Email Marketing</li>
+          <li>Market Research & Survey</li>
+          <li>Proofreading & Posting</li>
+        </ul>
+      </div>
+      <div class="exp-task-group">
+        <h4>Customer Support</h4>
+        <ul class="exp-task-list">
+          <li>Cold Calling</li>
+          <li>Lead Generation</li>
+          <li>Data Entry</li>
+          <li>Payment Processing & Invoicing</li>
+          <li>Ticket Booking</li>
+        </ul>
+      </div>
+      <div class="exp-task-group">
+        <h4>Team & Procurement</h4>
+        <ul class="exp-task-list">
+          <li>Multi-department coordination</li>
+          <li>Vendor Communication</li>
+          <li>Requisitions (supplies, equipment)</li>
+          <li>HR, Finance, Logistics liaison</li>
+          <li>Consultant & executive support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TOOLS ── -->
+<section id="tools">
+  <div class="tools-header reveal">
+    <p class="section-label">Tech Stack</p>
+    <h2 class="section-title">Tools & Platforms</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="tools-grid reveal">
+    <span class="tool-tag">Monday.com</span>
+    <span class="tool-tag">Notion</span>
+    <span class="tool-tag">Salesforce</span>
+    <span class="tool-tag">GHL (GoHighLevel)</span>
+    <span class="tool-tag">Microsoft Outlook</span>
+    <span class="tool-tag">Calendly</span>
+    <span class="tool-tag">Yahoo Mail</span>
+    <span class="tool-tag">Zoom</span>
+    <span class="tool-tag">Microsoft Teams</span>
+    <span class="tool-tag">GoTo</span>
+    <span class="tool-tag">Hubstaff</span>
+    <span class="tool-tag">HubSpot CRM</span>
+    <span class="tool-tag">LCC Vendor Portal</span>
+    <span class="tool-tag">PeopleCore</span>
+    <span class="tool-tag">CapCut</span>
+    <span class="tool-tag">Canva</span>
+    <span class="tool-tag">Adobe Suite</span>
+    <span class="tool-tag">Google Workspace</span>
+    <span class="tool-tag">Gmail</span>
+    <span class="tool-tag">Google Calendar</span>
+    <span class="tool-tag">Google Drive</span>
+    <span class="tool-tag">Google Docs</span>
+    <span class="tool-tag">Google Meet</span>
+    <span class="tool-tag">Facebook</span>
+    <span class="tool-tag">Instagram</span>
+    <span class="tool-tag">TikTok</span>
+    <span class="tool-tag">Shopee</span>
+    <span class="tool-tag">AI Tools</span>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="reveal">
+    <p class="section-label">Education</p>
+    <h2 class="section-title">Academic Background</h2>
+    <div class="section-divider"></div>
+    <div class="edu-entry">
+      <p class="edu-year">2022</p>
+      <h3 class="edu-school">Bicol University</h3>
+      <p class="edu-degree">College of Business, Economics and Management<br>Bachelor of Science in Entrepreneurship</p>
+      <span class="edu-honor">Magna Cum Laude</span>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="section-label">Certifications</p>
+    <h2 class="section-title">Training & Seminars</h2>
+    <div class="section-divider"></div>
+    <ul class="cert-list">
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">MBA for Executive Assistants, Secretaries and Admin Professionals</span></li>
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">Supervisory Development Program</span></li>
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">Basic Supervisory Training Skills</span></li>
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">P&L and Basic Financial Literacy</span></li>
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">Merchandise Management System (MMS) Training</span></li>
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">Social Media Marketing</span></li>
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">Lead Generation & Cold Calling</span></li>
+      <li class="cert-item"><span class="cert-bullet"></span><span class="cert-text">Appointment Setting</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2 class="section-title">Let's Work Together</h2>
+  <p class="contact-sub">Ready to take your business to the next level? I'd love to learn about your goals and show you how I can help make them happen.</p>
+  <div class="contact-details">
+    <div class="contact-item">
+      <span class="contact-item-label">Email</span>
+      <a href="mailto:iam.christine.bobis@gmail.com" class="contact-item-value">iam.christine.bobis@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">WhatsApp</span>
+      <a href="https://wa.me/639150084322" target="_blank" class="contact-item-value">+63 915 008 4322</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Location</span>
+      <span class="contact-item-value">Estancia, Malinao, Albay</span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">LinkedIn</span>
+      <a href="https://www.linkedin.com/in/christine-bobis-844307378" target="_blank" class="contact-item-value">linkedin.com/in/christine-bobis ↗</a>
+    </div>
+  </div>
+  <div class="contact-ctas">
+    <a href="mailto:iam.christine.bobis@gmail.com" class="contact-cta">Schedule a Discovery Call</a>
+    <a href="https://calendly.com/iam-christine-bobis/30min" target="_blank" class="contact-cta-outline">Book via Calendly</a>
+    <a href="https://drive.google.com/file/d/1LuElQXzr0zmobOulVwNdXXfX0NSG_yBb/view?usp=drive_link"
+       target="_blank" class="contact-cta-outline">Download CV</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="footer-name">Christine C. Bobis I — Executive Virtual Assistant</span>
+  <span class="footer-copy">© 2026 · Albay, Philippines</span>
+</footer>
+
+<script>
+/* ── Theme Toggle ── */
+const html = document.documentElement;
+const themeBtn = document.getElementById('themeToggle');
+const saved = localStorage.getItem('theme') || 'light';
+html.setAttribute('data-theme', saved);
+
+themeBtn.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
+
+/* ── Hamburger / Mobile Menu ── */
+const hamburger   = document.getElementById('hamburger');
+const mobileMenu  = document.getElementById('mobileMenu');
+const mobileClose = document.getElementById('mobileClose');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+
+mobileClose.addEventListener('click', closeMobile);
+
+function closeMobile() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── Scroll Reveal ── */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
